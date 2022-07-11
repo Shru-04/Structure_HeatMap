@@ -29,29 +29,7 @@ namespace {
 
       for (BasicBlock& B : F) {
         for(Instruction& I : B) {
-
-          // if(GetElementPtrInst* G = dyn_cast<GetElementPtrInst>(&I)) {
-          //   checkForStructMemberAccess(G);
-          // }
-
-          // if(LoadInst* L = dyn_cast<LoadInst>(&I)) {
-          //   if(ConstantExpr* C = dyn_cast<ConstantExpr>(L->getPointerOperand())) {
-          //     if(GetElementPtrInst* G = dyn_cast<GetElementPtrInst>(C->getAsInstruction())) {
-          //       checkForStructMemberAccess(G);
-          //     }
-          //   }
-          // }
-
-          // if(StoreInst* S = dyn_cast<StoreInst>(&I)) {
-          //   if(ConstantExpr* C = dyn_cast<ConstantExpr>(S->getPointerOperand())) {
-          //     if(GetElementPtrInst* G = dyn_cast<GetElementPtrInst>(C->getAsInstruction())) {
-          //       checkForStructMemberAccess(G);
-          //     }
-          //   }
-          // }
-
           check_instructions(I);
-
           if(CallInst *CI = dyn_cast<CallInst>(&I)){
             if(Function *Callee = CI->getCalledFunction()){
               for (inst_iterator _I = inst_begin(Callee), E = inst_end(Callee); _I != E; ++_I){
