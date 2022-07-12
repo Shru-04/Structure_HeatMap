@@ -23,7 +23,7 @@ $ make
 `cmake` needs to find its LLVM configurations in `[LLVM_DIR]`. We automatically
 setup `[LLVM_DIR]` based on `$LLVM_HOME` for you. Now the easiest way to run the skeleton pass is to use Clang:
 ```bash
-$ clang-7.0 -Xclang -load -Xclang build/skeleton/libSkeletonPass.* something.c$
+$ clang -flegacy-pass-manager -Xclang -load -Xclang build/skeleton/libSkeletonPass.* something.c$
 ```
 Note that Clang is the compiler front-end of the LLVM project.
 It can be installed separately in binary form.
