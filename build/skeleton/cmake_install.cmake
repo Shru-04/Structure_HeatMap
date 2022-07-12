@@ -1,4 +1,4 @@
-# Install script for directory: /home/shru04/Desktop/CD_EL/Structure_HeatMap/skeleton
+# Install script for directory: /home/shrujan-rvce/Desktop/CD_EL/Structure_HeatMap/skeleton
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

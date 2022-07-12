@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/shru04/Desktop/CD_EL/Structure_HeatMap/skeleton/Skeleton.cpp" "skeleton/CMakeFiles/SkeletonPass.dir/Skeleton.cpp.o" "gcc" "skeleton/CMakeFiles/SkeletonPass.dir/Skeleton.cpp.o.d"
+  "/home/shrujan-rvce/Desktop/CD_EL/Structure_HeatMap/skeleton/Skeleton.cpp" "skeleton/CMakeFiles/SkeletonPass.dir/Skeleton.cpp.o" "gcc" "skeleton/CMakeFiles/SkeletonPass.dir/Skeleton.cpp.o.d"
   )
 
 # Targets to which this target links.

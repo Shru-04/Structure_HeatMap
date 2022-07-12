@@ -24,6 +24,7 @@ namespace {
     SkeletonPass() : FunctionPass(ID) {}
 
     std::unordered_map<std::string, std::map<uint32_t, std::uintmax_t>> structs;
+    std::vector<std::string> xx;
 
     virtual bool runOnFunction(Function& F) {
 
@@ -40,14 +41,17 @@ namespace {
 
         }
       }
-
+      // for (auto &g : F.getParent()->getGlobalList())
+      //   xx.push_back(g.getName().str());
       return false;
     }
 
     virtual bool doFinalization(Module& M) {
       errs() << "Member access heatmap:\n";
       printMemberAccessHeatmap();
-
+      // errs()<<"global vars : " <<"\n\n";
+      // for (std::string i : xx)
+      //   errs()<<i<<"\n";
       return false;
     }
 
@@ -64,6 +68,7 @@ private:
             checkForStructMemberAccess(G);
           }
         }
+        
       }
 
       if(StoreInst* S = dyn_cast<StoreInst>(&I)) {
@@ -99,6 +104,14 @@ private:
           if(S->hasName()) {
             std::string sname = S->getName().str();
             structs[sname][idx]++;
+          }
+        }
+        else if (GlobalValue* Glob = dyn_cast<GlobalValue>(V)){
+          if(StructType* S = dyn_cast<StructType>(Glob->getType())) {
+            if(S->hasName()) {
+              std::string sname = S->getName().str();
+              structs[sname][idx]++;
+            }
           }
         }
 

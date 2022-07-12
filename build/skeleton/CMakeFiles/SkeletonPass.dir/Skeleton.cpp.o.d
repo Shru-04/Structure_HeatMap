@@ -1,5 +1,5 @@
 skeleton/CMakeFiles/SkeletonPass.dir/Skeleton.cpp.o: \
- /home/shru04/Desktop/CD_EL/Structure_HeatMap/skeleton/Skeleton.cpp \
+ /home/shrujan-rvce/Desktop/CD_EL/Structure_HeatMap/skeleton/Skeleton.cpp \
  /usr/include/stdc-predef.h /usr/lib/llvm-13/include/llvm/Pass.h \
  /usr/include/c++/11/string \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
