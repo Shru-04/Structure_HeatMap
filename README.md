@@ -14,7 +14,7 @@ We assume that you have a working compiler toolchain (GCC or LLVM) and that CMak
 
 To build the skeleton LLVM pass found in `skeleton` folder:
 ```bash
-$ cd llvm-pass-tutorial
+$ cd Structure_HeatMap 
 $ mkdir build
 $ cd build
 $ cmake ..
