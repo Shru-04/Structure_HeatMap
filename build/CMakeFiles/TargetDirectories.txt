@@ -1,8 +1,0 @@
-/home/shrujan-rvce/Desktop/CD_EL/Structure_HeatMap/build/CMakeFiles/intrinsics_gen.dir
-/home/shrujan-rvce/Desktop/CD_EL/Structure_HeatMap/build/CMakeFiles/omp_gen.dir
-/home/shrujan-rvce/Desktop/CD_EL/Structure_HeatMap/build/CMakeFiles/acc_gen.dir
-/home/shrujan-rvce/Desktop/CD_EL/Structure_HeatMap/build/CMakeFiles/edit_cache.dir
-/home/shrujan-rvce/Desktop/CD_EL/Structure_HeatMap/build/CMakeFiles/rebuild_cache.dir
-/home/shrujan-rvce/Desktop/CD_EL/Structure_HeatMap/build/skeleton/CMakeFiles/SkeletonPass.dir
-/home/shrujan-rvce/Desktop/CD_EL/Structure_HeatMap/build/skeleton/CMakeFiles/edit_cache.dir
-/home/shrujan-rvce/Desktop/CD_EL/Structure_HeatMap/build/skeleton/CMakeFiles/rebuild_cache.dir
