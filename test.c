@@ -15,14 +15,18 @@ void foo(){
 }
 int main( )    
 {    struct employee a;
-   a.id=10;
-   //strcpy(a.name,"shreyas");
-   a.salary=100.0;
-   //store first employee information    
-   e1.id=101; 
-   e2.salary = 10000;
-   strcpy(e1.name,"fgdg");
-   printf("%s",e1.name);
-   *(x.salary2) =2;
+//    a.id=10;
+//    //strcpy(a.name,"shreyas");
+//    a.salary=100.0;
+//    //store first employee information    
+//    e1.id=101; 
+//    e2.salary = 10000;
+   for (int i =10;i < 200; i++){
+        a.id=12;
+        a.id=123;
+        e1.id = e1.id +  1;
+   }
+   strcpy(a.name,"shreyas");
+   foo();
    return 0;
 }

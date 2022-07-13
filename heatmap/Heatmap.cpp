@@ -10,6 +10,11 @@
 #include "llvm/IR/Module.h"
 #include "llvm/IR/InstIterator.h"
 
+#include "llvm/Analysis/LoopPass.h"
+#include "llvm/Analysis/LoopIterator.h"
+#include "llvm/Analysis/LoopInfo.h"
+#include "llvm/ADT/Statistic.h"
+
 #include <cstdint>
 #include <unordered_map>
 #include <map>
@@ -18,46 +23,56 @@
 using namespace llvm;
 
 namespace {
-  struct SkeletonPass : public FunctionPass {
+  struct HeatmapPass : public FunctionPass {
 
     static char ID;
-    SkeletonPass() : FunctionPass(ID) {}
+    HeatmapPass() : FunctionPass(ID) {}
 
     std::unordered_map<std::string, std::map<uint32_t, std::uintmax_t>> structs;
     std::vector<std::string> xx;
 
     virtual bool runOnFunction(Function& F) {
 
-      for (BasicBlock& B : F) {
-        for(Instruction& I : B) {
-          check_instructions(I);
-          if(CallInst *CI = dyn_cast<CallInst>(&I)){
-            if(Function *Callee = CI->getCalledFunction()){
-              for (inst_iterator _I = inst_begin(Callee), E = inst_end(Callee); _I != E; ++_I){
-                check_instructions(*_I);
+      //Always start from entrypoint function 'main()'
+      if (F.getName().str() == "main"){
+        //Check for each block and instruction
+        for (BasicBlock& B : F) {
+          for(Instruction& I : B) {
+            check_instructions(I);
+            
+            //Check whether structs are there in Functions Called
+            if(CallInst *CI = dyn_cast<CallInst>(&I)){
+              if(Function *Callee = CI->getCalledFunction()){
+                for (inst_iterator _I = inst_begin(Callee), E = inst_end(Callee); _I != E; ++_I){
+                  check_instructions(*_I);
+                }
+
+                //Check whether struct is passed as an argument
+                for (auto ar = Callee->arg_begin(); ar != Callee->arg_end(); ++ar)
+                  if (auto *ci = dyn_cast<Instruction>(ar))
+                    check_instructions(*ci);
               }
             }
           }
-
         }
       }
-      // for (auto &g : F.getParent()->getGlobalList())
-      //   xx.push_back(g.getName().str());
+
       return false;
     }
 
+    //Print O/P
     virtual bool doFinalization(Module& M) {
       errs() << "Member access heatmap:\n";
       printMemberAccessHeatmap();
-      // errs()<<"global vars : " <<"\n\n";
-      // for (std::string i : xx)
-      //   errs()<<i<<"\n";
       return false;
     }
 
 private:
 
     void check_instructions(Instruction& I){
+
+      //Checks for all instructions containing struct variables
+
       if(GetElementPtrInst* G = dyn_cast<GetElementPtrInst>(&I)) {
         checkForStructMemberAccess(G);
       }
@@ -99,6 +114,8 @@ private:
           continue;
         }
 
+        // Checks for all struct variable scopes, local and global, and updates frequency table
+
         uint64_t idx = cast<ConstantInt>(V)->getZExtValue();
         if(StructType* S = dyn_cast<StructType>(T)) {
           if(S->hasName()) {
@@ -126,11 +143,10 @@ private:
   };
 }
 
-char SkeletonPass::ID = 0;
+char HeatmapPass::ID = 0;
 
 // Automatically enable the pass.
-// http://adriansampson.net/blog/clangpass.html
-static void registerSkeletonPass(const PassManagerBuilder&, legacy::PassManagerBase& PM) {
-  PM.add(new SkeletonPass());
+static void registerHeatmapPass(const PassManagerBuilder&, legacy::PassManagerBase& PM) {
+  PM.add(new HeatmapPass());
 }
-static RegisterStandardPasses RegisterMyPass(PassManagerBuilder::EP_EarlyAsPossible, registerSkeletonPass);
+static RegisterStandardPasses RegisterMyPass(PassManagerBuilder::EP_EarlyAsPossible, registerHeatmapPass);
