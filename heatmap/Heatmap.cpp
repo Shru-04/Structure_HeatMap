@@ -46,12 +46,19 @@ namespace {
                 for (inst_iterator _I = inst_begin(Callee), E = inst_end(Callee); _I != E; ++_I){
                   check_instructions(*_I);
                 }
-
-                //Check whether struct is passed as an argument
-                for (auto ar = Callee->arg_begin(); ar != Callee->arg_end(); ++ar)
-                  if (auto *ci = dyn_cast<Instruction>(ar))
-                    check_instructions(*ci);
               }
+
+              //Check whether struct is passed as an argument
+
+              for (int i = 0; i < CI->getNumArgOperands(); i++){
+                Value *v1 = CI->getArgOperand(i);
+                Type *x = v1->getType();
+                for (auto ii = v1->user_begin(); ii != v1->user_end(); ++ii){
+                  if (Instruction *inst = dyn_cast<Instruction>(*ii))
+                    check_instructions(*inst);
+                }
+              }
+
             }
           }
         }
@@ -101,6 +108,8 @@ private:
         for(const auto& [mem, count] : mems) {
           errs() << mem << ": " << count << "\n";
         }
+        // for (auto i:xx)
+        //   errs() << i << "\n";
       }
     }
 
@@ -123,7 +132,7 @@ private:
             structs[sname][idx]++;
           }
         }
-        else if (GlobalValue* Glob = dyn_cast<GlobalValue>(V)){
+        if (GlobalValue* Glob = dyn_cast<GlobalValue>(V)){
           if(StructType* S = dyn_cast<StructType>(Glob->getType())) {
             if(S->hasName()) {
               std::string sname = S->getName().str();
