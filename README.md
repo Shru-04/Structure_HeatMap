@@ -2,17 +2,17 @@
 
 LLVM is an umbrella project for building compilers
 and code transformation tools. It consists of several sub-projects like Clang,
-LLD and, confusingly enough, the LLVM sub-project. We consider in this tutorial:
+LLD and, confusingly enough, the LLVM sub-project. We consider in this project:
 - Building the LLVM *sub-project* from source
-- Building a trivial out-of-source LLVM pass.
+- Building a out-of-source LLVM pass to generate frequencies of structure members accessed.
 
 We will be building LLVM v`10.0.0` which is the latest as of this writing.
 We assume that you have a working compiler toolchain (GCC or LLVM) and that CMake is installed (minimum version 3.4).
 
 
-## Building a trivial LLVM pass ##
+## Building the HeatMap LLVM pass ##
 
-To build the skeleton LLVM pass found in `skeleton` folder:
+To build the heatmap LLVM pass found in `heatmap` folder:
 ```bash
 $ cd Structure_HeatMap 
 $ mkdir build
@@ -23,7 +23,7 @@ $ make
 `cmake` needs to find its LLVM configurations in `[LLVM_DIR]`. We automatically
 setup `[LLVM_DIR]` based on `$LLVM_HOME` for you. Now the easiest way to run the skeleton pass is to use Clang:
 ```bash
-$ clang -flegacy-pass-manager -Xclang -load -Xclang build/skeleton/libSkeletonPass.* something.c$
+$ clang -flegacy-pass-manager -Xclang -load -Xclang build/skeleton/libHeatmapPass.* something.c$
 ```
 Note that Clang is the compiler front-end of the LLVM project.
 It can be installed separately in binary form.
